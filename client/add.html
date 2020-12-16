@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          />
+          <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          />
+      
+      <title>Add</title>
+  </head>
+  <body>
+        <div class="jumbotron">
+          <h1>Add a character</h1>
+          <hr />
+          <form id="addSubmit">
+            <div class="mb-2">
+              <label for="nameInput"> Enter name </label>
+              <input type="text" id="nameInput" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="routeInput"> Enter search route </label>
+              <input type="text" id="routeInput" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="roleInput"> Enter a role </label>
+              <input type="text" id="roleInput" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="ageInput"> Enter an age </label>
+              <input type="text" id="ageInput" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="fpInput"> Enter force points </label>
+              <input type="text" id="fpInput" class="form-control" />
+            </div>
+            <button class="btn btn-primary">Add</button>
+          </form>
+        </div>
+
+    <script>
+        const nameInput = document.getElementById("nameInput");
+        const routeInput = document.getElementById("routeInput");
+        const roleInput = document.getElementById("roleInput");
+        const ageInput = document.getElementById("ageInput");
+        const fpInput = document.getElementById("fpInput");
+
+        const addForm = document.getElementById("addSubmit");
+
+        addForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const newCharData = {
+                name: nameInput.value,
+                routeName: routeInput.value,
+                role: roleInput.value,
+                age: ageInput.value,
+                forcePoints: fpInput.value,
+        };
+        
+        fetch("/api/characters/new", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newCharData),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log (data);
+                alert("You've added a new character");
+            })
+            .catch((err) => console.log(err));
+        });
+    </script>
+  </body>
+</html>
